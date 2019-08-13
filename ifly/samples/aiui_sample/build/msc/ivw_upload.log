@@ -1,0 +1,26 @@
+============================================================
+Time  2019/08/08 16:24:30 332 
+============================================================
+[2019/08/08 16:24:30 332] ivw_upload 722  SYS_MSG_LOAD  
+[2019/08/08 16:24:30 332] ivw_upload 781  IVW_UPLOAD_MSG_QUE  
+[2019/08/08 16:24:30 332] ivw_upload 794  ==================== Query Start ====================  
+[2019/08/08 16:24:30 332] ivw_upload 645  try2_query  
+[2019/08/08 16:24:30 332] ivw_upload 653  query_data   {"cmd":"uploadquery","input":{"appid":"59a4c2a0"}}  
+[2019/08/08 16:24:30 332] ivw_upload 665  Do query  
+[2019/08/08 16:24:30 333] ivw_upload 673  compressed data_len:  69  
+[2019/08/08 16:24:30 333] ivw_upload 677  xor data_len:  69  
+[2019/08/08 16:24:30 333] ivw_upload 305  build_httpreq type=  query  
+[2019/08/08 16:24:30 333] ivw_upload 340  unknown  
+[2019/08/08 16:24:30 333] ivw_upload 402  POST /internal/awaken/comm HTTP/1.1
+Host: ins.xfyun.cn
+Connection: Keep-Alive
+Content-Type: application/octet-steam
+Content-Length: 69
+
+å¨QM…JVµU-*œŒHK.+J*≠S’VÕÀ,/*Vµ≠QM+/œNú]!ù#"/“—5	IØ‡4  
+[2019/08/08 16:24:30 333] ivw_upload 408  handle_httpresp type=  query  
+[2019/08/08 16:24:30 333] network    501  gethttpresp  http://ins.xfyun.cn/internal/awaken/comm  nil  
+[2019/08/08 16:24:30 333] network    263  gethostbyname  ins.xfyun.cn  1  
+[2019/08/08 16:24:30 348] ivw_upload 733  SYS_MSG_SHUTDOWN  
+[2019/08/08 16:24:30 348] ivw_upload 610  save no upload data  
+[2019/08/08 16:24:30 348] ivw_upload 622  data size:  0  
