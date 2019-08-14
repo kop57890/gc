@@ -1,0 +1,5 @@
+ifly/bin/
+ifly/samples/aiui_sample/build/demo*
+ifly/samples/aiui_sample/build/tts_sample*
+ifly/samples/aiui_sample/build/iat_*
+ifly/samples/aiui_sample/build/read_json.py

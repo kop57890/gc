@@ -300,7 +300,8 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 						cout << parse_result << endl;
 						string result = "";
 						int ret = MSP_SUCCESS;
-						const char* login_params = "appid = 59a4c2a0, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动
+						// 59a4c2a0
+						const char* login_params = "appid = 5d3fde6d, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动
 						const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
 						const char* filename = "tts_sample.pcm"; //合成的语音文件名称
 						const char* text = parse_result.c_str();; //合成文本
@@ -440,8 +441,6 @@ void AIUITester::write(bool repeat){
 	}	
 }
 
-
-
 void AIUITester::stopWriteThread(){
 	if (writeThread) {
 		writeThread->stopRun();
@@ -526,27 +525,29 @@ void AIUITester::readCmd(){
 	string result = "";
 	createAgent();
     wakeup();
-	//while (true){
-	char newline[256];
-	FILE *fd;
-	printf("Start Listening...\n");
-	fd = popen("./iat_record_sample", "r");
-	while((fgets(newline, 256, fd)) != NULL) {
-		result = newline;
-	}
-	pclose(fd);
-	if(strstr(newline, "结束") != NULL){
-		printf("%s\n", newline);
-		exit(0);
-	}else{
-		if(strstr(newline, "err") == NULL){
-			printf("%s\n", newline);
-			writeText(result);
-		}else{
-			printf("Error!\n");
+	while (true){
+		char newline[256];
+		FILE *fd;
+		printf("Start Listening...\n");
+		// fd = popen("./iat_record_sample", "r");
+		fd = popen("./iat_online_record_sample", "r");
+		while((fgets(newline, 256, fd)) != NULL) {
+			result = newline;
 		}
+		pclose(fd);
+		if(strstr(newline, "结束") != NULL){
+			printf("%s\n", newline);
+			exit(0);
+		}else{
+			if(strstr(newline, "err") == NULL){
+				printf("%s\n", newline);
+				writeText(result);
+			}else{
+				printf("Error!\n");
+			}
+		}
+		cin.ignore();
 	}
-	cin.ignore();
 }
 
 void AIUITester::test(){
