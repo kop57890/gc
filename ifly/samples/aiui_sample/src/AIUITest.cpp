@@ -525,29 +525,29 @@ void AIUITester::readCmd(){
 	string result = "";
 	createAgent();
     wakeup();
-	while (true){
-		char newline[256];
-		FILE *fd;
-		printf("Start Listening...\n");
-		// fd = popen("./iat_record_sample", "r");
-		fd = popen("./iat_online_record_sample", "r");
-		while((fgets(newline, 256, fd)) != NULL) {
-			result = newline;
-		}
-		pclose(fd);
-		if(strstr(newline, "结束") != NULL){
-			printf("%s\n", newline);
-			exit(0);
-		}else{
-			if(strstr(newline, "err") == NULL){
-				printf("%s\n", newline);
-				writeText(result);
-			}else{
-				printf("Error!\n");
-			}
-		}
-		cin.ignore();
+	// while (true){
+	char newline[256];
+	FILE *fd;
+	printf("Start Listening...\n");
+	// fd = popen("./iat_record_sample", "r");
+	fd = popen("./iat_online_record_sample", "r");
+	while((fgets(newline, 256, fd)) != NULL) {
+		result = newline;
 	}
+	pclose(fd);
+	if(strstr(newline, "结束") != NULL){
+		printf("%s\n", newline);
+		exit(0);
+	}else{
+		if(strstr(newline, "err") == NULL){
+			printf("%s\n", newline);
+			writeText(result);
+		}else{
+			printf("Error!\n");
+		}
+	}
+		// cin.ignore();
+	// }
 }
 
 void AIUITester::test(){
