@@ -632,3 +632,237 @@ li{ list-style-type:none;}
 [2019/08/14 21:45:24 546] ivw_upload 733  SYS_MSG_SHUTDOWN  
 [2019/08/14 21:45:24 546] ivw_upload 610  save no upload data  
 [2019/08/14 21:45:24 546] ivw_upload 622  data size:  0  
+============================================================
+Time  2019/08/15 20:25:36 163 
+============================================================
+[2019/08/15 20:25:36 163] ivw_upload 722  SYS_MSG_LOAD  
+[2019/08/15 20:25:36 163] ivw_upload 781  IVW_UPLOAD_MSG_QUE  
+[2019/08/15 20:25:36 163] ivw_upload 794  ==================== Query Start ====================  
+[2019/08/15 20:25:36 163] ivw_upload 645  try2_query  
+[2019/08/15 20:25:36 163] ivw_upload 653  query_data   {"input":{"appid":"5d3fde6d"},"cmd":"uploadquery"}  
+[2019/08/15 20:25:36 163] ivw_upload 665  Do query  
+[2019/08/15 20:25:36 165] ivw_upload 673  compressed data_len:  69  
+[2019/08/15 20:25:36 165] ivw_upload 677  xor data_len:  69  
+[2019/08/15 20:25:36 165] ivw_upload 305  build_httpreq type=  query  
+[2019/08/15 20:25:36 165] ivw_upload 340  unknown  
+[2019/08/15 20:25:36 165] ivw_upload 402  POST /internal/awaken/comm HTTP/1.1
+Host: ins.xfyun.cn
+Connection: Keep-Alive
+Content-Type: application/octet-steam
+Content-Length: 69
+
+��Q��,/*V��QM+/�KV�U5J6ILN2LV��VM����� ���R-�5���4  
+[2019/08/15 20:25:36 165] ivw_upload 408  handle_httpresp type=  query  
+[2019/08/15 20:25:36 165] network    501  gethttpresp  http://ins.xfyun.cn/internal/awaken/comm  nil  
+[2019/08/15 20:25:36 165] network    263  gethostbyname  ins.xfyun.cn  1  
+[2019/08/15 20:25:36 178] network    245  dns resp  0  1  
+[2019/08/15 20:25:36 178] network    487  gethttpresp dns ok  42.62.43.138  
+[2019/08/15 20:25:36 178] network    445  gethttpresp2  42.62.43.138  80  2  
+[2019/08/15 20:25:36 178] network    465  prot_type  tcp  
+[2019/08/15 20:25:36 259] network    350  connected  2  
+[2019/08/15 20:25:36 260] network    353  send ok  211  2  
+[2019/08/15 20:25:36 347] network    362  readable  2  
+[2019/08/15 20:25:36 348] network    366  HTTP/1.1 403 Forbidden
+Server: iflysec.Herald/1.1
+Date: Thu, 15 Aug 2019 12:25:40 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Set-Cookie: _wafuid=27936147
+
+b2e
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>WEB应用防火墙</title>
+<style>
+p {
+	line-height:20px;
+}
+ul{ list-style-type:none;}
+li{ list-style-type:none;}
+</style>
+</head>
+<body style=" padding:0; margin:0; font:14px/1.5 Microsoft Yahei, 宋体,sans-serif; color:#555;">
+ <div style="margin: 0 auto; width:1000px; padding-top:70px; overflow:hidden;">
+
+
+  <div style="width:600px; float:left;">
+    <div style=" height:40px; line-height:40px; color:#fff; font-size:16px; overflow:hidden; background:#6bb3f6; padding-left:20px;">WEB应用防火墙-403 </div>
+    <div style="border:1px dashed #cdcece; border-top:none; font-size:14px; background:#fff; color:#555; line-height:24px; height:300px; 
+[2019/08/15 20:25:36 348] network    366  ackground:#f3f7f9;">
+      <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-weight:600; color:#fc4f03;">抱歉，您的请求可能对网站造成威胁，已被网站防火墙拦截！</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">可能原因：您提交的内容包含危险的攻击请求或是您的访问过于频繁</p>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">如何解决：</p>
+<ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;">
+<li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">1）检查提交内容；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+[2019/08/15 20:25:36 348] network    366  联系网站客服，为您的访问提供绿色通道，不再拦截；</li></ul>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">访问信息：</p>
+<ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;">
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">1）客户端IP: 59.115.193.220 ；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">2）访问域名: ins.xfyun.cn ；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">3）访问时间: 2019-08-15 20:25:40 ；</li></ul>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">powerd by iflysec:Origin</p>
+    </d
+[2019/08/15 20:25:36 348] ivw_upload 514  http resp  nil  0  udata(380459d8) 
+[2019/08/15 20:25:36 349] ivw_upload 520  http connect failed, statuscode =  403  
+[2019/08/15 20:25:36 349] ivw_upload 57   ==================== Query Finished ====================  
+[2019/08/15 20:25:41 209] ivw_upload 733  SYS_MSG_SHUTDOWN  
+[2019/08/15 20:25:41 209] ivw_upload 610  save no upload data  
+[2019/08/15 20:25:41 209] ivw_upload 622  data size:  0  
+============================================================
+Time  2019/08/15 20:25:41 382 
+============================================================
+[2019/08/15 20:25:41 382] ivw_upload 722  SYS_MSG_LOAD  
+[2019/08/15 20:25:41 386] ivw_upload 781  IVW_UPLOAD_MSG_QUE  
+[2019/08/15 20:25:41 386] ivw_upload 794  ==================== Query Start ====================  
+[2019/08/15 20:25:41 386] ivw_upload 645  try2_query  
+[2019/08/15 20:25:41 386] ivw_upload 653  query_data   {"cmd":"uploadquery","input":{"appid":"5d3fde6d"}}  
+[2019/08/15 20:25:41 386] ivw_upload 665  Do query  
+[2019/08/15 20:25:41 388] ivw_upload 673  compressed data_len:  69  
+[2019/08/15 20:25:41 388] ivw_upload 677  xor data_len:  69  
+[2019/08/15 20:25:41 388] ivw_upload 305  build_httpreq type=  query  
+[2019/08/15 20:25:41 388] ivw_upload 340  unknown  
+[2019/08/15 20:25:41 388] ivw_upload 402  POST /internal/awaken/comm HTTP/1.1
+Host: ins.xfyun.cn
+Connection: Keep-Alive
+Content-Type: application/octet-steam
+Content-Length: 69
+
+��QM�JV�U-*��HK.+J*�S�V��,/*V��QM+/�N�������/��5�io�4  
+[2019/08/15 20:25:41 388] ivw_upload 408  handle_httpresp type=  query  
+[2019/08/15 20:25:41 388] network    501  gethttpresp  http://ins.xfyun.cn/internal/awaken/comm  nil  
+[2019/08/15 20:25:41 389] network    263  gethostbyname  ins.xfyun.cn  1  
+[2019/08/15 20:25:41 392] network    245  dns resp  0  1  
+[2019/08/15 20:25:41 392] network    487  gethttpresp dns ok  42.62.43.138  
+[2019/08/15 20:25:41 392] network    445  gethttpresp2  42.62.43.138  80  2  
+[2019/08/15 20:25:41 392] network    465  prot_type  tcp  
+[2019/08/15 20:25:41 460] network    350  connected  2  
+[2019/08/15 20:25:41 461] network    353  send ok  211  2  
+[2019/08/15 20:25:41 535] network    362  readable  2  
+[2019/08/15 20:25:41 536] network    366  HTTP/1.1 403 Forbidden
+Server: iflysec.Herald/1.1
+Date: Thu, 15 Aug 2019 12:25:45 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Set-Cookie: _wafuid=89657346
+
+b2e
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>WEB应用防火墙</title>
+<style>
+p {
+	line-height:20px;
+}
+ul{ list-style-type:none;}
+li{ list-style-type:none;}
+</style>
+</head>
+<body style=" padding:0; margin:0; font:14px/1.5 Microsoft Yahei, 宋体,sans-serif; color:#555;">
+ <div style="margin: 0 auto; width:1000px; padding-top:70px; overflow:hidden;">
+
+
+  <div style="width:600px; float:left;">
+    <div style=" height:40px; line-height:40px; color:#fff; font-size:16px; overflow:hidden; background:#6bb3f6; padding-left:20px;">WEB应用防火墙-403 </div>
+    <div style="border:1px dashed #cdcece; border-top:none; font-size:14px; background:#fff; color:#555; line-height:24px; height:300px; 
+[2019/08/15 20:25:41 536] network    366  ackground:#f3f7f9;">
+      <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-weight:600; color:#fc4f03;">抱歉，您的请求可能对网站造成威胁，已被网站防火墙拦截！</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">可能原因：您提交的内容包含危险的攻击请求或是您的访问过于频繁</p>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">如何解决：</p>
+<ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;">
+<li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">1）检查提交内容；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+[2019/08/15 20:25:41 537] network    366  联系网站客服，为您的访问提供绿色通道，不再拦截；</li></ul>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">访问信息：</p>
+<ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;">
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">1）客户端IP: 59.115.193.220 ；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">2）访问域名: ins.xfyun.cn ；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">3）访问时间: 2019-08-15 20:25:45 ；</li></ul>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">powerd by iflysec:Origin</p>
+    </d
+[2019/08/15 20:25:41 537] ivw_upload 514  http resp  nil  0  udata(e4045e48) 
+[2019/08/15 20:25:41 537] ivw_upload 520  http connect failed, statuscode =  403  
+[2019/08/15 20:25:41 537] ivw_upload 57   ==================== Query Finished ====================  
+[2019/08/15 20:25:42 012] ivw_upload 733  SYS_MSG_SHUTDOWN  
+[2019/08/15 20:25:42 012] ivw_upload 610  save no upload data  
+[2019/08/15 20:25:42 012] ivw_upload 622  data size:  0  
+============================================================
+Time  2019/08/15 20:25:46 015 
+============================================================
+[2019/08/15 20:25:46 015] ivw_upload 722  SYS_MSG_LOAD  
+[2019/08/15 20:25:46 015] ivw_upload 781  IVW_UPLOAD_MSG_QUE  
+[2019/08/15 20:25:46 015] ivw_upload 794  ==================== Query Start ====================  
+[2019/08/15 20:25:46 015] ivw_upload 645  try2_query  
+[2019/08/15 20:25:46 015] ivw_upload 653  query_data   {"cmd":"uploadquery","input":{"appid":"5d3fde6d"}}  
+[2019/08/15 20:25:46 016] ivw_upload 665  Do query  
+[2019/08/15 20:25:46 017] ivw_upload 673  compressed data_len:  69  
+[2019/08/15 20:25:46 017] ivw_upload 677  xor data_len:  69  
+[2019/08/15 20:25:46 017] ivw_upload 305  build_httpreq type=  query  
+[2019/08/15 20:25:46 017] ivw_upload 340  unknown  
+[2019/08/15 20:25:46 017] ivw_upload 402  POST /internal/awaken/comm HTTP/1.1
+Host: ins.xfyun.cn
+Connection: Keep-Alive
+Content-Type: application/octet-steam
+Content-Length: 69
+
+��QM�JV�U-*��HK.+J*�S�V��,/*V��QM+/�N�������/��5�io�4  
+[2019/08/15 20:25:46 017] ivw_upload 408  handle_httpresp type=  query  
+[2019/08/15 20:25:46 017] network    501  gethttpresp  http://ins.xfyun.cn/internal/awaken/comm  nil  
+[2019/08/15 20:25:46 017] network    263  gethostbyname  ins.xfyun.cn  1  
+[2019/08/15 20:25:46 020] network    245  dns resp  0  1  
+[2019/08/15 20:25:46 020] network    487  gethttpresp dns ok  42.62.43.138  
+[2019/08/15 20:25:46 020] network    445  gethttpresp2  42.62.43.138  80  2  
+[2019/08/15 20:25:46 020] network    465  prot_type  tcp  
+[2019/08/15 20:25:46 096] network    350  connected  2  
+[2019/08/15 20:25:46 096] network    353  send ok  211  2  
+[2019/08/15 20:25:46 166] network    362  readable  2  
+[2019/08/15 20:25:46 166] network    366  HTTP/1.1 403 Forbidden
+Server: iflysec.Herald/1.1
+Date: Thu, 15 Aug 2019 12:25:50 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+Set-Cookie: _wafuid=53423814
+
+b2e
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>WEB应用防火墙</title>
+<style>
+p {
+	line-height:20px;
+}
+ul{ list-style-type:none;}
+li{ list-style-type:none;}
+</style>
+</head>
+<body style=" padding:0; margin:0; font:14px/1.5 Microsoft Yahei, 宋体,sans-serif; color:#555;">
+ <div style="margin: 0 auto; width:1000px; padding-top:70px; overflow:hidden;">
+
+
+  <div style="width:600px; float:left;">
+    <div style=" height:40px; line-height:40px; color:#fff; font-size:16px; overflow:hidden; background:#6bb3f6; padding-left:20px;">WEB应用防火墙-403 </div>
+    <div style="border:1px dashed #cdcece; border-top:none; font-size:14px; background:#fff; color:#555; line-height:24px; height:300px; 
+[2019/08/15 20:25:46 167] network    366  ackground:#f3f7f9;">
+      <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-weight:600; color:#fc4f03;">抱歉，您的请求可能对网站造成威胁，已被网站防火墙拦截！</span></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">可能原因：您提交的内容包含危险的攻击请求或是您的访问过于频繁</p>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">如何解决：</p>
+<ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;">
+<li style=" margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">1）检查提交内容；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;
+[2019/08/15 20:25:46 167] network    366  联系网站客服，为您的访问提供绿色通道，不再拦截；</li></ul>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">访问信息：</p>
+<ul style="margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;">
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">1）客户端IP: 59.115.193.220 ；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">2）访问域名: ins.xfyun.cn ；</li>
+<li style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">3）访问时间: 2019-08-15 20:25:50 ；</li></ul>
+<p style=" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;">powerd by iflysec:Origin</p>
+    </d
+[2019/08/15 20:25:46 167] ivw_upload 514  http resp  nil  0  udata(ec045e68) 
+[2019/08/15 20:25:46 167] ivw_upload 520  http connect failed, statuscode =  403  
+[2019/08/15 20:25:46 167] ivw_upload 57   ==================== Query Finished ====================  
+[2019/08/15 20:25:51 055] ivw_upload 733  SYS_MSG_SHUTDOWN  
+[2019/08/15 20:25:51 056] ivw_upload 610  save no upload data  
+[2019/08/15 20:25:51 056] ivw_upload 622  data size:  0  
