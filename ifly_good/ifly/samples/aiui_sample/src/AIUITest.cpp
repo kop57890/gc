@@ -303,7 +303,7 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 						// 59a4c2a0
 						const char* login_params = "appid = 5d3fde6d, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动
 						const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
-						const char* filename = "tts_sample.pcm"; //合成的语音文件名称
+						const char* filename = "tts_sample.wav"; //合成的语音文件名称
 						const char* text = parse_result.c_str();; //合成文本
 						ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://www.xfyun.cn注册获取
 						if (MSP_SUCCESS != ret)	{
@@ -314,7 +314,7 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 							printf("text_to_speech failed, error code: %d.\n", ret);
 						}
 						MSPLogout();
-						system("play -t raw -r 16k -e signed -b 16 -c 1 tts_sample.pcm");
+						system("play -q tts_sample.wav");
 					}
 				} else {
 					cout << "buffer is NULL" << endl;
@@ -407,24 +407,6 @@ void AIUITester::wakeup(){
 		IAIUIMessage * wakeupMsg = IAIUIMessage::create(AIUIConstant::CMD_WAKEUP);
 		agent->sendMessage(wakeupMsg);
 		wakeupMsg->destroy();
-	}
-}
-
-//停止AIUI服务，此接口是与stop()对应，调用stop()之后必须调用此接口才能继续与SDK交互，如果你没有调用过stop(),就不需要调用该接口
-void AIUITester::start(){
-	if (NULL != agent){
-		IAIUIMessage * startMsg = IAIUIMessage::create (AIUIConstant::CMD_START);
-		agent->sendMessage(startMsg);
-		startMsg->destroy();
-	}
-}
-
-//停止AIUI服务
-void AIUITester::stop(){
-	if (NULL != agent){
-		IAIUIMessage *stopMsg = IAIUIMessage::create (AIUIConstant::CMD_STOP);
-		agent->sendMessage(stopMsg);
-		stopMsg->destroy();
 	}
 }
 
@@ -523,29 +505,36 @@ void AIUITester::destory(){
 //接收用户输入命令，调用不同的测试接口
 void AIUITester::readCmd(){
 	string result = "";
+	char first[10] = "阿英";
+	int count = 0;
 	createAgent();
     wakeup();
 	while (true){
+		// printf("count = %d\n", count);
 		char newline[256];
-		FILE *fd;
-		printf("Start Listening...\n");
-		// fd = popen("./iat_record_sample", "r");
-		fd = popen("./iat_online_record_sample", "r");
-		while((fgets(newline, 256, fd)) != NULL) {
-			result = newline;
-		}
-		pclose(fd);
-		if(strstr(newline, "结束") != NULL){
-			printf("%s\n", newline);
-			exit(0);
-		}else{
-			if(strstr(newline, "err") == NULL){
-				printf("%s\n", newline);
+		if(count == 0){
+			writeText(first);
+		}else if(count > 0){
+			FILE *fd;
+			printf("Start Listening...\n");
+			fd = popen("./iat_online_record_sample", "r");
+			while((fgets(newline, 256, fd)) != NULL) {
+				result = newline;
+			}
+			if(strstr(newline, "结束") != NULL){
+				// printf("xxxx = %s\n", newline);
+				exit(0);
+			}else if (strstr(newline, "垃圾") != NULL){
+				// printf("xxxx = %s\n", newline);
 				writeText(result);
 			}else{
-				printf("Error!\n");
+				writeText(first);
 			}
+			pclose(fd);
+		}else{
+			printf("Error!\n");
 		}
+		count++;
 		cin.ignore();
 	}
 }
