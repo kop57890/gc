@@ -206,65 +206,64 @@ bool WriteAudioThread::run(){
 void TestListener::onEvent(const IAIUIEvent& event) const{
 	switch (event.getEventType()) {
 	//SDK 状态回调
-	case AIUIConstant::EVENT_STATE:
-		{
-			switch (event.getArg1()) {
-			case AIUIConstant::STATE_IDLE:
-				{
-					// cout << "EVENT_STATE:" << "IDLE" << endl;
-				} break;
+	// case AIUIConstant::EVENT_STATE:
+	// 	{
+	// 		switch (event.getArg1()) {
+	// 		case AIUIConstant::STATE_IDLE:
+	// 			{
+	// 				// cout << "EVENT_STATE:" << "IDLE" << endl;
+	// 			} break;
 
-			case AIUIConstant::STATE_READY:
-				{
-					// cout << "EVENT_STATE:" << "READY" << endl;
-				} break;
+	// 		case AIUIConstant::STATE_READY:
+	// 			{
+	// 				// cout << "EVENT_STATE:" << "READY" << endl;
+	// 			} break;
 
-			case AIUIConstant::STATE_WORKING:
-				{
-					// cout << "EVENT_STATE:" << "WORKING" << endl;
-				} break;
-			}
-		} break;
+	// 		case AIUIConstant::STATE_WORKING:
+	// 			{
+	// 				// cout << "EVENT_STATE:" << "WORKING" << endl;
+	// 			} break;
+	// 		}
+	// 	} break;
 
-	//唤醒事件回调
-	case AIUIConstant::EVENT_WAKEUP:
-		{
-			// cout << "EVENT_WAKEUP:" << event.getInfo() << endl;
-		} break;
+	// //唤醒事件回调
+	// case AIUIConstant::EVENT_WAKEUP:
+	// 	{
+	// 		// cout << "EVENT_WAKEUP:" << event.getInfo() << endl;
+	// 	} break;
 
-	//休眠事件回调
-	case AIUIConstant::EVENT_SLEEP:
-		{
-			cout << "EVENT_SLEEP:arg1=" << event.getArg1() << endl;
-		} break;
+	// //休眠事件回调
+	// case AIUIConstant::EVENT_SLEEP:
+	// 	{
+	// 		cout << "EVENT_SLEEP:arg1=" << event.getArg1() << endl;
+	// 	} break;
 
-	//VAD事件回调，如找到前后端点
-	case AIUIConstant::EVENT_VAD:
-		{
-			switch (event.getArg1()) {
-			case AIUIConstant::VAD_BOS:
-				{
-					cout << "EVENT_VAD:" << "BOS" << endl;
-				} break;
+	// //VAD事件回调，如找到前后端点
+	// case AIUIConstant::EVENT_VAD:
+	// 	{
+	// 		switch (event.getArg1()) {
+	// 		case AIUIConstant::VAD_BOS:
+	// 			{
+	// 				cout << "EVENT_VAD:" << "BOS" << endl;
+	// 			} break;
 
-			case AIUIConstant::VAD_EOS:
-				{
-					cout << "EVENT_VAD:" << "EOS" << endl;
-				} break;
+	// 		case AIUIConstant::VAD_EOS:
+	// 			{
+	// 				cout << "EVENT_VAD:" << "EOS" << endl;
+	// 			} break;
 
-			case AIUIConstant::VAD_VOL:
-				{
-					//	cout << "EVENT_VAD:" << "VOL" << endl;
-				} break;
-			}
-		} break;
+	// 		case AIUIConstant::VAD_VOL:
+	// 			{
+	// 				//	cout << "EVENT_VAD:" << "VOL" << endl;
+	// 			} break;
+	// 		}
+	// 	} break;
 
 	//最重要的结果事件回调
 	case AIUIConstant::EVENT_RESULT:
 		{
 			Json::Value bizParamJson;
-			Json::Reader reader;
-			
+			Json::Reader reader;			
 			if (!reader.parse(event.getInfo(), bizParamJson, false)) {
 				cout << "parse error!" << endl << event.getInfo() << endl;
 				break;
@@ -509,34 +508,48 @@ void AIUITester::readCmd(){
 	int count = 0;
 	createAgent();
     wakeup();
-	while (true){
-		// printf("count = %d\n", count);
-		char newline[256];
-		if(count == 0){
-			writeText(first);
-		}else if(count > 0){
-			FILE *fd;
-			printf("Start Listening...\n");
-			fd = popen("./iat_online_record_sample", "r");
-			while((fgets(newline, 256, fd)) != NULL) {
-				result = newline;
-			}
-			if(strstr(newline, "结束") != NULL){
-				// printf("xxxx = %s\n", newline);
-				exit(0);
-			}else if (strstr(newline, "垃圾") != NULL){
-				// printf("xxxx = %s\n", newline);
-				writeText(result);
-			}else{
-				writeText(first);
-			}
-			pclose(fd);
-		}else{
-			printf("Error!\n");
-		}
-		count++;
-		cin.ignore();
+
+	char newline[256];
+	FILE *fd;
+	printf("Start Listening...\n");
+	fd = popen("./iat_online_record_sample", "r");
+	while((fgets(newline, 256, fd)) != NULL) {
+		result = newline;
 	}
+	if(strstr(newline, "结束") != NULL){
+		exit(0);
+	}else if (strstr(newline, "垃圾") != NULL){
+		writeText(result);
+	}else{
+		writeText(first);
+	}
+	pclose(fd);
+	cin.ignore();
+	// while (true){
+	// 	char newline[256];
+	// 	if(count == 0){
+	// 		writeText(first);
+	// 	}else if(count > 0){
+	// 		FILE *fd;
+	// 		printf("Start Listening...\n");
+	// 		fd = popen("./iat_online_record_sample", "r");
+	// 		while((fgets(newline, 256, fd)) != NULL) {
+	// 			result = newline;
+	// 		}
+	// 		if(strstr(newline, "结束") != NULL){
+	// 			exit(0);
+	// 		}else if (strstr(newline, "垃圾") != NULL){
+	// 			writeText(result);
+	// 		}else{
+	// 			writeText(first);
+	// 		}
+	// 		pclose(fd);
+	// 	}else{
+	// 		printf("Error!\n");
+	// 	}
+	// 	count++;
+	// 	cin.ignore();
+	// }
 }
 
 void AIUITester::test(){

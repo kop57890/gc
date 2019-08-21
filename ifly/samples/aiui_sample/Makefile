@@ -27,11 +27,7 @@ CFLAGS := $(foreach inc, $(INCS), -I$(inc))
 CFLAGS +=  -fPIC -g -D_GLIBCXX_USE_CXX11_ABI=0
 
 # The options used in linking as well as in any direct use of ld.
-ifdef LINUX64
 LDFLAGS := -L$(DIR_LIB)/x64
-else
-LDFLAGS := -L$(DIR_LIB)/x86 
-endif
 LDFLAGS += -fPIC -pthread -laiui -lmsc
 
 ## Stable Section: usually no need to be changed. But you can add more.

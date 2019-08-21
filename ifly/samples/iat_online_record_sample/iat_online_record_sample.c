@@ -47,12 +47,12 @@ void on_speech_begin(){
 	g_result = (char*)malloc(BUFFER_SIZE);
 	g_buffersize = BUFFER_SIZE;
 	memset(g_result, 0, g_buffersize);
-	// printf("Start Listening...\n");
+	printf("Start Listening...\n");
 }
 
 void on_speech_end(int reason){
 	if (reason == END_REASON_VAD_DETECT){
-		// printf("\nSpeaking done \n");
+		printf("\nSpeaking done \n");
 	} else {
 		printf("\nRecognizer error %d\n", reason);
 	}
@@ -68,29 +68,27 @@ static void demo_mic(const char* session_begin_params){
 		on_speech_begin,
 		on_speech_end
 	};
-
+	printf("1\n");
 	errcode = sr_init(&iat, session_begin_params, SR_MIC, &recnotifier);
 	if (errcode) {
 		printf("speech recognizer init failed\n");
 		return;
 	}
 	errcode = sr_start_listening(&iat);
+	printf("2\n");
 	if (errcode) {
 		printf("start listen failed %d\n", errcode);
 	}
 	/* demo 5 seconds recording */
 	while(i++ < 5){sleep(1);}
 	errcode = sr_stop_listening(&iat);
+	printf("xxxx = %d\n", errcode);
 	if (errcode) {
 		printf("stop listening failed %d\n", errcode);
 	}
 
 	sr_uninit(&iat);
 }
-/* main thread: start/stop record ; query the result of recgonization.
- * record thread: record callback(data write)
- * helper thread: ui(keystroke detection)
- */
 int main(int argc, char* argv[]){
 	int ret = MSP_SUCCESS;
 	/* login params, please do keep the appid correct */
