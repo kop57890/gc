@@ -322,7 +322,6 @@ void AIUITester::readCmd(){
 		while(state != 1){			
 			usleep(500);
 		}
-		// cout << "state = " << state <<endl;	
 		count++;
 		state = 0;
 		free(newline);
