@@ -294,7 +294,6 @@ void AIUITester::writeText(string stt){
 void AIUITester::readCmd(){
 	char first[10] = "阿英";
 	char sec[10] = "拉";
-	char end[10] = "不說話";
 	int count = 0;
 	int count_null = 0;
 	createAgent();
@@ -319,13 +318,14 @@ void AIUITester::readCmd(){
 				if(count_null >= 2){					
 					printf("没有听到我会的, 我先干别的去了, 需要再叫我阿英\n");
 					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");
-					break;				
+					break;
 				}else{
 					printf("No Speak input!\n");
 					writeText(sec);
 				}
 				count_null++;			
 			}else{
+				count_null = 0;
 				printf("Speak = %s\n", newline);
 				writeText(result);
 			}
