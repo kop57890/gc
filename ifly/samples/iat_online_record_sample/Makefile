@@ -1,7 +1,7 @@
 #common makefile header
 
 DIR_INC = ../../include
-DIR_BIN = ./
+DIR_BIN = ../aiui_sample/build/
 DIR_LIB = ../../libs
 
 TARGET	= iat_online_record_sample

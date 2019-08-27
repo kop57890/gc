@@ -119,6 +119,25 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 	}
 	return ret;
 }
+
+void tts_function(const char* input){
+	int ret = MSP_SUCCESS;
+	const char* login_params = "appid = 5d3fde6d, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动 59a4c2a0
+	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
+	const char* filename = "tts_sample.wav"; //合成的语音文件名称
+	const char* text = input; //合成文本
+	ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://www.xfyun.cn注册获取
+	if (MSP_SUCCESS != ret)	{
+		printf("MSPLogin failed, error code: %d.\n", ret);
+	}
+	ret = text_to_speech(text, filename, session_begin_params);
+	if (MSP_SUCCESS != ret){
+		printf("text_to_speech failed, error code: %d.\n", ret);
+	}
+	MSPLogout();
+	system("play -q tts_sample.wav");
+}
+
 string parse_result = "";
 static int state = 0;
 //事件回调接口，SDK状态，文本，语义结果等都是通过该接口抛出
@@ -162,23 +181,8 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 					if(result_Param["intent"]["answer"]["text"] != "null"){
 						parse_result = result_Param["intent"]["answer"]["text"].asString();
 						cout << parse_result << endl;
-						string result = "";
-						int ret = MSP_SUCCESS;
-						// 59a4c2a0
-						const char* login_params = "appid = 5d3fde6d, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动
-						const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
-						const char* filename = "tts_sample.wav"; //合成的语音文件名称
-						const char* text = parse_result.c_str();; //合成文本
-						ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://www.xfyun.cn注册获取
-						if (MSP_SUCCESS != ret)	{
-							printf("MSPLogin failed, error code: %d.\n", ret);
-						}
-						ret = text_to_speech(text, filename, session_begin_params);
-						if (MSP_SUCCESS != ret){
-							printf("text_to_speech failed, error code: %d.\n", ret);
-						}
-						MSPLogout();
-						system("play -q tts_sample.wav");
+						string result = "";						
+						tts_function(parse_result.c_str());
 						state = 1;
 					}
 				} else {
@@ -291,6 +295,7 @@ void AIUITester::readCmd(){
 	char first[10] = "阿英";
 	char sec[10] = "拉";
 	int count = 0;
+	int count_null = 0;
 	createAgent();
     wakeup(); 
 	while (true){
@@ -308,10 +313,19 @@ void AIUITester::readCmd(){
 			}
 			if(strstr(newline, "结束") != NULL){
 				exit(0);
-			}else if ((newline != NULL) && (newline[0] == '\0')){
-				printf("No Speak input!");
-				writeText(sec);
+			}else if ((newline != NULL) && (newline[0] == '\0')){								
+				printf("count null = %d\n", count_null);
+				if(count_null >= 2){					
+					printf("没有听到我会的, 我先干别的去了, 需要再叫我阿英\n");
+					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");
+					break;
+				}else{
+					printf("No Speak input!\n");
+					writeText(sec);
+				}
+				count_null++;			
 			}else{
+				count_null = 0;
 				printf("Speak = %s\n", newline);
 				writeText(result);
 			}
@@ -322,7 +336,6 @@ void AIUITester::readCmd(){
 		while(state != 1){			
 			usleep(500);
 		}
-		// cout << "state = " << state <<endl;	
 		count++;
 		state = 0;
 		free(newline);

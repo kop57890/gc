@@ -68,21 +68,18 @@ static void demo_mic(const char* session_begin_params){
 		on_speech_begin,
 		on_speech_end
 	};
-	printf("1\n");
 	errcode = sr_init(&iat, session_begin_params, SR_MIC, &recnotifier);
 	if (errcode) {
 		printf("speech recognizer init failed\n");
 		return;
 	}
 	errcode = sr_start_listening(&iat);
-	printf("2\n");
 	if (errcode) {
 		printf("start listen failed %d\n", errcode);
 	}
 	/* demo 5 seconds recording */
 	while(i++ < 5){sleep(1);}
 	errcode = sr_stop_listening(&iat);
-	printf("xxxx = %d\n", errcode);
 	if (errcode) {
 		printf("stop listening failed %d\n", errcode);
 	}
@@ -107,12 +104,9 @@ int main(int argc, char* argv[]){
 	ret = MSPLogin(NULL, NULL, login_params);
 	if (MSP_SUCCESS != ret)	{
 		printf("MSPLogin failed , Error code %d.\n",ret);
-		goto exit; // login fail, exit the program
+		exit(0); // login fail, exit the program
 	}
 	demo_mic(session_begin_params);
 	printf("%s\n", get_result);
-exit:
-	MSPLogout(); // Logout...
-
 	return 0;
 }
