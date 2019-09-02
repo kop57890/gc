@@ -181,8 +181,11 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 					if(result_Param["intent"]["answer"]["text"] != "null"){
 						parse_result = result_Param["intent"]["answer"]["text"].asString();
 						cout << parse_result << endl;
-						string result = "";						
-						tts_function(parse_result.c_str());
+						string result = "";
+						// tts_function(parse_result.c_str());
+						if(parse_result != "init"){
+							tts_function(parse_result.c_str());
+						}									
 						state = 1;
 					}
 				} else {
@@ -290,23 +293,37 @@ void AIUITester::writeText(string stt){
 	}
 }
 
+void AIUITester::destory(){
+	if (NULL != agent){
+		agent->destroy();
+		agent = NULL;
+	}
+}
+
 //接收用户输入命令，调用不同的测试接口
 void AIUITester::readCmd(){
 	char first[10] = "阿英";
 	char sec[10] = "拉";
 	int count = 0;
 	int count_null = 0;
-	createAgent();
-    wakeup(); 
 	while (true){
+		createAgent();
+    	wakeup(); 
 		char* newline = (char*)calloc(1000, sizeof(char));
 		string result = "";
+		cout << "while loop count: " << count << endl;
+		writeText(first);
+		while(state != 1){
+			usleep(500);
+		}
 		if(count == 0){
-			printf("Entry = %s\n", first);
-			writeText(first);
+			printf("Entry = %s\n", first);		
+			tts_function("你好! 我是阿英, 垃圾分类的问题可以问我");
+			destory();
 		}else if(count > 0){
 			FILE *fd;
 			printf("Start Listening...\n");
+			system("play -q ding.wav");			
 			fd = popen("./iat_online_record_sample", "r");
 			while((fgets(newline, 256, fd)) != NULL) {
 				result = newline;
@@ -320,11 +337,13 @@ void AIUITester::readCmd(){
 					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");
 					break;
 				}else{
+					state = 0;
 					printf("No Speak input!\n");
 					writeText(sec);
 				}
 				count_null++;			
 			}else{
+				state = 0;
 				count_null = 0;
 				printf("Speak = %s\n", newline);
 				writeText(result);
@@ -332,13 +351,14 @@ void AIUITester::readCmd(){
 			pclose(fd);
 		}else{
 			printf("Error!\n");
-		}		
-		while(state != 1){			
+		}
+		while(state != 1){
 			usleep(500);
 		}
 		count++;
 		state = 0;
 		free(newline);
+		destory();	
 	}
 }
 
