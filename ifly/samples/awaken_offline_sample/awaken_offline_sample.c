@@ -72,7 +72,7 @@ static void iat_cb(char *data, unsigned long len, void *user_para)
 
 int cb_ivw_msg_proc( const char *sessionID, int msg, int param1, int param2, const void *info, void *userData )
 {
-	printf("cb_ivw_msg_proc\n");
+
   if (MSP_IVW_MSG_ERROR == msg) //唤醒出错消息
   {
     printf("\n\nMSP_IVW_MSG_ERROR errCode = %d\n\n", param1);
@@ -156,12 +156,10 @@ void run_ivw(const char *grammar_list,  const char* session_begin_params)
 
 	snprintf(sse_hints, sizeof(sse_hints), "success");
 
-
 exit:
 	if (NULL != session_id)
 	{
-		QIVWSessionEnd(session_id, sse_hints);
-		printf("HELLO world!!!!!\n");
+		QIVWSessionEnd(session_id, sse_hints);	
 	}
 	
 }
