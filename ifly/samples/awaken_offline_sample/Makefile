@@ -19,11 +19,12 @@ LDFLAGS += -lmsc -lrt -ldl -lpthread -lasound -lstdc++
 
 OBJECTS := $(patsubst %.c,%.o,$(wildcard *.c))
 
+
 $(BIN_TARGET) : $(OBJECTS)
-	$(CROSS_COMPILE)gcc $(CFLAGS) $^ -o $@ $(LDFLAGS)
+	$(CROSS_COMPILE)g++ $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 %.o : %.c
-	$(CROSS_COMPILE)gcc -c $(CFLAGS) $< -o $@
+	$(CROSS_COMPILE)g++ -c $(CFLAGS) $< -o $@
 clean:
 	@rm -f *.o $(BIN_TARGET)
 
