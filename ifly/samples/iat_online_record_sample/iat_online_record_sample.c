@@ -78,7 +78,7 @@ static void demo_mic(const char* session_begin_params){
 		printf("start listen failed %d\n", errcode);
 	}
 	/* demo 5 seconds recording */
-	while(i++ < 5){sleep(1);}
+	while(i++ < 3){sleep(1);}
 	errcode = sr_stop_listening(&iat);
 	if (errcode) {
 		printf("stop listening failed %d\n", errcode);
@@ -89,7 +89,7 @@ static void demo_mic(const char* session_begin_params){
 int main(int argc, char* argv[]){
 	int ret = MSP_SUCCESS;
 	/* login params, please do keep the appid correct */
-	const char* login_params = "appid = 5d3fde6d, work_dir = .";
+	const char* login_params = "appid = 5d836e29, work_dir = .";
 	/*
 	* See "iFlytek MSC Reference Manual"
 	*/

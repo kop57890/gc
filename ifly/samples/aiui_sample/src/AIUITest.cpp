@@ -122,7 +122,7 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 
 void tts_function(const char* input){
 	int ret = MSP_SUCCESS;
-	const char* login_params = "appid = 5d3fde6d, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动 59a4c2a0
+	const char* login_params = "appid = 5d836e29, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动 59a4c2a0
 	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
 	const char* filename = "tts_sample.wav"; //合成的语音文件名称
 	const char* text = input; //合成文本
@@ -227,7 +227,7 @@ TestListener::~TestListener(){
 
 //创建AIUI代理
 void AIUITester::createAgent(){
-	string appid = "5d3fde6d";
+	string appid = "5d836e29";
 	Json::Value paramJson;
 	Json::Value appidJson;
 
@@ -243,7 +243,7 @@ void AIUITester::createAgent(){
 		//如果在aiui.cfg中设置了唤醒模式为ivw唤醒，那么需要对设置的唤醒资源路径作处理，并且设置唤醒的libmsc.so的路径为当前路径
 		if(wakeup_mode == "ivw"){
 			//readme中有说明，使用libmsc.so唤醒库，需要调用MSPLogin()先登录
-			string lgiparams = "appid=5d3fde6d,engine_start=ivw";
+			string lgiparams = "appid=5d836e29,engine_start=ivw";
 			printf("sssssssssss\n");
 			int ret = MSP_SUCCESS;
 			ret = MSPLogin(NULL, NULL, lgiparams.c_str());
@@ -354,7 +354,7 @@ void AIUITester::readCmd(){
 			printf("Error!\n");
 		}
 		while(state != 1){
-			usleep(500);
+			usleep(50000);
 		}
 		count++;
 		state = 0;
