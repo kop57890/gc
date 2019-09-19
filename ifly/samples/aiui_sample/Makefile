@@ -16,7 +16,7 @@ DIR_LIB = ../../libs
 INCS += ../../include/
 
 # The output file name.
-TARGET = demo
+TARGET = awaken_offline_sample
 
 # The C program compiler.
 CC = g++
@@ -28,7 +28,7 @@ CFLAGS +=  -fPIC -g -D_GLIBCXX_USE_CXX11_ABI=0
 
 # The options used in linking as well as in any direct use of ld.
 LDFLAGS := -L$(DIR_LIB)/x64
-LDFLAGS += -fPIC -pthread -laiui -lmsc
+LDFLAGS += -fPIC -pthread -laiui -lmsc -lrt -ldl -lpthread -lasound -lstdc++
 
 ## Stable Section: usually no need to be changed. But you can add more.
 ##==========================================================================
