@@ -329,7 +329,8 @@ void AIUITester::readCmd(){
 				result = newline;
 			}
 			if(strstr(newline, "结束") != NULL){
-				exit(0);
+				//exit(0);
+				break;
 			}else if ((newline != NULL) && (newline[0] == '\0')){								
 				printf("count null = %d\n", count_null);
 				if(count_null >= 2){					

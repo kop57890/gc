@@ -193,8 +193,11 @@ int main(int argc, char* argv[])
 		{
 			//system("cd ~/source/gc/ifly_good/samples/aiui_sample/build/");
 			//system("./demo");
+			MSPLogout();
 			AIUITester t;
 	        t.test();
+			ret = MSPLogin(NULL, NULL, lgi_param);
+			g_is_awaken_succeed=FALSE;
 		}
 	}
 	//sleep_ms(2000);
