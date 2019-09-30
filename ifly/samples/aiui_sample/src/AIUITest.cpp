@@ -17,7 +17,7 @@
 #define IAT_NUM 512
 
 using namespace VA;
-string log_file_name=get_time()+".txt";
+string log_file_name="log_file/"+get_time()+".txt";
 typedef struct _wave_pcm_hdr{
 
 	char            riff[4];                // = "RIFF"
