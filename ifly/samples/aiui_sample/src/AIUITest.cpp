@@ -27,7 +27,7 @@ typedef struct _wave_pcm_hdr{
 	short int       block_align;            // = 每采样点字节数 : wBitsPerSample / 8
 	short int       bits_per_sample;        // = 量化比特数: 8 | 16
 	char            data[4];                // = "data";
-	int		data_size;              // = 纯数据长度 : FileSize - 44 
+	int		data_size;              // = 纯数据长度 : FileSize - 44
 } wave_pcm_hdr;
 
 /* 默认wav音频头部数据 */
@@ -46,7 +46,7 @@ wave_pcm_hdr default_wav_hdr = {
 	2,
 	16,
 	{'d', 'a', 't', 'a'},
-	0  
+	0
 };
 
 /* 文本合成 */
@@ -147,7 +147,7 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 	case AIUIConstant::EVENT_RESULT:
 		{
 			Json::Value bizParamJson;
-			Json::Reader reader;			
+			Json::Reader reader;
 			if (!reader.parse(event.getInfo(), bizParamJson, false)) {
 				cout << "parse error!" << endl << event.getInfo() << endl;
 				break;
@@ -171,21 +171,20 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 				string resultStr;
 				Json::Value result_Param;
 				Json::Reader result_reader;
-						
+
 				if (NULL != buffer){
-					resultStr = string(buffer, dataLen);					
+					resultStr = string(buffer, dataLen);
 					if (!reader.parse(resultStr.c_str(), result_Param, false)) {
 						cout << "parse error!" << endl << resultStr << endl;
 						break;
 					}
 					if(result_Param["intent"]["answer"]["text"] != "null"){
-						parse_result = result_Param["intent"]["answer"]["text"].asString();
+						parse_result = result_Param["intent"]["answer"]["text"].asString(); // 拿來當判斷的string todo
 						cout << parse_result << endl;
 						string result = "";
-						// tts_function(parse_result.c_str());
 						if(parse_result != "init"){
 							tts_function(parse_result.c_str());
-						}									
+						}
 						state = 1;
 					}
 				} else {
@@ -232,7 +231,7 @@ void AIUITester::createAgent(){
 	Json::Value appidJson;
 
 	appidJson["appid"] = appid;
-	
+
 	string fileParam = FileUtil::readFileAsString(CFG_FILE_PATH);
 	Json::Reader reader;
 	if(reader.parse(fileParam, paramJson, false))
@@ -300,6 +299,10 @@ void AIUITester::destory(){
 	}
 }
 
+void get_user_log(char* log){ //todo
+	//write file
+}
+
 //接收用户输入命令，调用不同的测试接口
 void AIUITester::readCmd(){
 	char first[10] = "阿英";
@@ -308,7 +311,7 @@ void AIUITester::readCmd(){
 	int count_null = 0;
 	while (true){
 		createAgent();
-    	wakeup(); 
+    	wakeup();
 		char* newline = (char*)calloc(1000, sizeof(char));
 		string result = "";
 		cout << "while loop count: " << count << endl;
@@ -317,23 +320,22 @@ void AIUITester::readCmd(){
 			usleep(500);
 		}
 		if(count == 0){
-			printf("Entry = %s\n", first);		
+			printf("Entry = %s\n", first);
 			tts_function("你好! 我是阿英, 垃圾分类的问题可以问我");
 			destory();
 		}else if(count > 0){
 			FILE *fd;
 			printf("Start Listening...\n");
-			system("play -q ding.wav");			
+			system("play -q ding.wav");
 			fd = popen("./iat_online_record_sample", "r");
 			while((fgets(newline, 256, fd)) != NULL) {
 				result = newline;
 			}
 			if(strstr(newline, "结束") != NULL){
-				//exit(0);
 				break;
-			}else if ((newline != NULL) && (newline[0] == '\0')){								
+			}else if ((newline != NULL) && (newline[0] == '\0')){
 				printf("count null = %d\n", count_null);
-				if(count_null >= 2){					
+				if(count_null >= 2){
 					printf("没有听到我会的, 我先干别的去了, 需要再叫我阿英\n");
 					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");
 					break;
@@ -342,11 +344,16 @@ void AIUITester::readCmd(){
 					printf("No Speak input!\n");
 					writeText(sec);
 				}
-				count_null++;			
+				count_null++;
 			}else{
 				state = 0;
 				count_null = 0;
 				printf("Speak = %s\n", newline);
+				// if(strstr(parse_result, "當不懂的時候") != NULL){ //todo 判斷的字串在aiui上改
+					// get log
+				// }else{
+					// get log
+				// }
 				writeText(result);
 			}
 			pclose(fd);
@@ -359,7 +366,7 @@ void AIUITester::readCmd(){
 		count++;
 		state = 0;
 		free(newline);
-		destory();	
+		destory();
 	}
 }
 
