@@ -130,7 +130,9 @@ static char * skip_space(char *s)
 static int update_format_from_sessionparam(const char * session_para, WAVEFORMATEX *wavefmt)
 {
 	char *s;
-	if ((s = strstr(session_para, "sample_rate"))) {
+	char *ptr;
+	strcpy(ptr, session_para);
+	if ((s = strstr(ptr, "sample_rate"))) {
 		s = strstr(s, "=");
 		if (s && *s) {
 			s = skip_space(s);

@@ -12,6 +12,12 @@
 #include "linuxrec.h"
 #include "speech_recognizer.h"
 
+#include <iostream>
+#include "../aiui_sample/src/AIUITest.h"
+
+using namespace std;
+using namespace aiui;
+
 #define IVW_AUDIO_FILE_NAME "audio/awake.pcm"
 #define FRAME_LEN	640 //16k采样率的16bit音频，一帧的大小为640B, 时长20ms
 
@@ -186,7 +192,9 @@ int main(int argc, char* argv[])
 		if(g_is_awaken_succeed==TRUE)
 		{
 			//system("cd ~/source/gc/ifly_good/samples/aiui_sample/build/");
-			system("./demo");
+			//system("./demo");
+			AIUITester t;
+	        t.test();
 		}
 	}
 	//sleep_ms(2000);
