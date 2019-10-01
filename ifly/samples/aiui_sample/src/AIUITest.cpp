@@ -188,7 +188,11 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 						cout << parse_result << endl;
 						string result = "";
 						if(parse_result != "init"){
-							get_user_log(log_file_name,"system",parse_result);
+							cout << parse_result.find("已确认") << endl;
+							if(parse_result.find("已确认") > 8 && parse_result.find("已确认") < 20){ // work around
+								parse_result = "请问这是什么材料构成的";
+							}
+							get_user_log(log_file_name, "system", parse_result);
 							tts_function(parse_result.c_str());
 						}
 						state = 1;
@@ -248,7 +252,7 @@ void AIUITester::createAgent(){
 		//如果在aiui.cfg中设置了唤醒模式为ivw唤醒，那么需要对设置的唤醒资源路径作处理，并且设置唤醒的libmsc.so的路径为当前路径
 		if(wakeup_mode == "ivw"){
 			//readme中有说明，使用libmsc.so唤醒库，需要调用MSPLogin()先登录
-			string lgiparams = "appid=5d836e29,engine_start=ivw";
+			string lgiparams = "appid=5d836e29, engine_start=ivw";
 			printf("sssssssssss\n");
 			int ret = MSP_SUCCESS;
 			ret = MSPLogin(NULL, NULL, lgiparams.c_str());
@@ -305,35 +309,31 @@ void AIUITester::destory(){
 	}
 }
 
-string Int_to_String(int n)
-
-{
-
+string Int_to_String(int n){
 	ostringstream stream;
-
-	stream<<n; //n为int类型
-
+	stream << n; //n为int类型
 	return stream.str();
-
 }
 
-string get_time()
-{
+string get_time(){
 	// 基于当前系统的当前日期/时间
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
-	string time_= Int_to_String(1900 + ltm->tm_year)+"_"+Int_to_String(1 + ltm->tm_mon)+"_"+Int_to_String(ltm->tm_mday)+"_"+Int_to_String(ltm->tm_hour)+"_"+Int_to_String(ltm->tm_min)+"_"+Int_to_String(ltm->tm_sec);
+	string time_= Int_to_String(1900 + ltm->tm_year) +
+				  "_" + Int_to_String(1 + ltm->tm_mon) + 
+				  "_" + Int_to_String(ltm->tm_mday) + 
+				  "_" + Int_to_String(ltm->tm_hour) + 
+				  "_" + Int_to_String(ltm->tm_min) + 
+				  "_" + Int_to_String(ltm->tm_sec);
 	return time_;
 }
 
-void get_user_log(string file_name,string user , string data)
-{ 
+void get_user_log(string file_name,string user , string data){
 	ofstream outfile;
-	outfile.open(file_name.c_str(),ios::out|ios::app);
-	string log_time=get_time();
-	outfile << log_time<<" "<<user<<" "<<data<< endl;
+	outfile.open(file_name.c_str(), ios::out|ios::app);
+	string log_time = get_time();
+	outfile << log_time << "_" << user << "_" << data << endl;
 	outfile.close();
-
 }
 
 
@@ -388,11 +388,6 @@ void AIUITester::readCmd(){
 				count_null = 0;
 				printf("Speak = %s\n", newline);
 				get_user_log(log_file_name,"user",newline);
-				// if(strstr(parse_result, "當不懂的時候") != NULL){ //todo 判斷的字串在aiui上改
-					// get log
-				// }else{
-					// get log
-				// }
 				writeText(result);
 			}
 			pclose(fd);

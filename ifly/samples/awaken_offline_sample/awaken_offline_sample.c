@@ -174,7 +174,8 @@ exit:
 int main(int argc, char* argv[])
 {
 	int         ret       = MSP_SUCCESS;
-	const char *lgi_param = "appid = 5d3fde6d,work_dir = .";
+	//const char *lgi_param = "appid = 5d3fde6d, work_dir = .";
+	const char *lgi_param = "appid = 5d836e29, work_dir = .";
 	const char *ssb_param = "ivw_threshold=0:1450,sst=wakeup,ivw_res_path =fo|res/ivw/wakeupresource.jet";
 
 	ret = MSPLogin(NULL, NULL, lgi_param);
