@@ -31,6 +31,9 @@
 using namespace aiui;
 using namespace std;
 
+string Int_to_String(int );
+string get_time();
+void get_user_log(string ,string  , string );
 
 //写测试音频线程
 class WriteAudioThread

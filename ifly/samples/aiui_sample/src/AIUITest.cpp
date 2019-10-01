@@ -9,10 +9,15 @@
 #include "qtts.h"
 #include "msp_cmn.h"
 #include "../../../include/msp_errors.h"
+#include <ctime>
+
+#include <sstream>
+#include <iostream>
 #define __line //printf("%s : %s (%d)\n",__FILE__,__FUNCTION__,__LINE__);
 #define IAT_NUM 512
 
 using namespace VA;
+string log_file_name="log_file/"+get_time()+".txt";
 typedef struct _wave_pcm_hdr{
 
 	char            riff[4];                // = "RIFF"
@@ -183,6 +188,7 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 						cout << parse_result << endl;
 						string result = "";
 						if(parse_result != "init"){
+							get_user_log(log_file_name,"system",parse_result);
 							tts_function(parse_result.c_str());
 						}
 						state = 1;
@@ -299,9 +305,37 @@ void AIUITester::destory(){
 	}
 }
 
-void get_user_log(char* log){ //todo
-	//write file
+string Int_to_String(int n)
+
+{
+
+	ostringstream stream;
+
+	stream<<n; //n为int类型
+
+	return stream.str();
+
 }
+
+string get_time()
+{
+	// 基于当前系统的当前日期/时间
+	time_t now = time(0);
+	tm *ltm = localtime(&now);
+	string time_= Int_to_String(1900 + ltm->tm_year)+"_"+Int_to_String(1 + ltm->tm_mon)+"_"+Int_to_String(ltm->tm_mday)+"_"+Int_to_String(ltm->tm_hour)+"_"+Int_to_String(ltm->tm_min)+"_"+Int_to_String(ltm->tm_sec);
+	return time_;
+}
+
+void get_user_log(string file_name,string user , string data)
+{ 
+	ofstream outfile;
+	outfile.open(file_name.c_str(),ios::out|ios::app);
+	string log_time=get_time();
+	outfile << log_time<<" "<<user<<" "<<data<< endl;
+	outfile.close();
+
+}
+
 
 //接收用户输入命令，调用不同的测试接口
 void AIUITester::readCmd(){
@@ -309,6 +343,8 @@ void AIUITester::readCmd(){
 	char sec[10] = "拉";
 	int count = 0;
 	int count_null = 0;
+	
+    cout<<"teddy"<<endl;
 	while (true){
 		createAgent();
     	wakeup();
@@ -322,6 +358,7 @@ void AIUITester::readCmd(){
 		if(count == 0){
 			printf("Entry = %s\n", first);
 			tts_function("你好! 我是阿英, 垃圾分类的问题可以问我");
+			get_user_log(log_file_name,"system","你好! 我是阿英, 垃圾分类的问题可以问我");
 			destory();
 		}else if(count > 0){
 			FILE *fd;
@@ -338,6 +375,7 @@ void AIUITester::readCmd(){
 				if(count_null >= 2){
 					printf("没有听到我会的, 我先干别的去了, 需要再叫我阿英\n");
 					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");
+					get_user_log(log_file_name,"system","没有听到我会的, 我先干别的去了, 需要再叫我阿英");
 					break;
 				}else{
 					state = 0;
@@ -349,6 +387,7 @@ void AIUITester::readCmd(){
 				state = 0;
 				count_null = 0;
 				printf("Speak = %s\n", newline);
+				get_user_log(log_file_name,"user",newline);
 				// if(strstr(parse_result, "當不懂的時候") != NULL){ //todo 判斷的字串在aiui上改
 					// get log
 				// }else{
