@@ -185,16 +185,14 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 					}
 					if(result_Param["intent"]["answer"]["text"] != "null"){
 						parse_result = result_Param["intent"]["answer"]["text"].asString(); // 拿來當判斷的string todo
-						cout << parse_result << endl;
-						string result = "";
 						if(parse_result != "init"){
-							cout << parse_result.find("已确认") << endl;
 							if(parse_result.find("已确认") > 8 && parse_result.find("已确认") < 20){ // work around
 								parse_result = "请问这是什么材料构成的";
 							}
-							get_user_log(log_file_name, "system", parse_result);
+							// get_user_log(log_file_name, "system", parse_result);
 							tts_function(parse_result.c_str());
 						}
+						debug_log(__FILE__, __FUNCTION__, __LINE__, parse_result);
 						state = 1;
 					}
 				} else {
@@ -239,39 +237,36 @@ void AIUITester::createAgent(){
 	string appid = "5d836e29";
 	Json::Value paramJson;
 	Json::Value appidJson;
-
 	appidJson["appid"] = appid;
 
 	string fileParam = FileUtil::readFileAsString(CFG_FILE_PATH);
 	Json::Reader reader;
-	if(reader.parse(fileParam, paramJson, false))
-	{
+	if(reader.parse(fileParam, paramJson, false)){
 		paramJson["login"] = appidJson;
 		//for ivw support
-		string wakeup_mode = paramJson["speech"]["wakeup_mode"].asString();
+		// string wakeup_mode = paramJson["speech"]["wakeup_mode"].asString();
 		//如果在aiui.cfg中设置了唤醒模式为ivw唤醒，那么需要对设置的唤醒资源路径作处理，并且设置唤醒的libmsc.so的路径为当前路径
-		if(wakeup_mode == "ivw"){
-			//readme中有说明，使用libmsc.so唤醒库，需要调用MSPLogin()先登录
-			string lgiparams = "appid=5d836e29, engine_start=ivw";
-			printf("sssssssssss\n");
-			int ret = MSP_SUCCESS;
-			ret = MSPLogin(NULL, NULL, lgiparams.c_str());
-			printf("xxxxxxxxx %d\n", ret);
-			if (MSP_SUCCESS != ret){
-				printf("MSPLogin failed, error code: %d.\n", ret);
-				exit(0);
-			}
-			string ivw_res_path = paramJson["ivw"]["res_path"].asString();
-			if(!ivw_res_path.empty()){
-				ivw_res_path = "fo|" + ivw_res_path;
-				paramJson["ivw"]["res_path"] = ivw_res_path;
-			}
-			string ivw_lib_path = "/home/vic/awake/libs/x64/libmsc.so";
-			paramJson["ivw"]["msc_lib_path"] = ivw_lib_path;
-			// MSPLogout();
-		}
+		// if(wakeup_mode == "ivw"){
+			// //readme中有说明，使用libmsc.so唤醒库，需要调用MSPLogin()先登录
+			// string lgiparams = "appid=5d836e29, engine_start=ivw";
+			// printf("sssssssssss\n");
+			// int ret = MSP_SUCCESS;
+			// ret = MSPLogin(NULL, NULL, lgiparams.c_str());
+			// printf("xxxxxxxxx %d\n", ret);
+			// if (MSP_SUCCESS != ret){
+				// printf("MSPLogin failed, error code: %d.\n", ret);
+				// exit(0);
+			// }
+			// string ivw_res_path = paramJson["ivw"]["res_path"].asString();
+			// if(!ivw_res_path.empty()){
+				// ivw_res_path = "fo|" + ivw_res_path;
+				// paramJson["ivw"]["res_path"] = ivw_res_path;
+			// }
+			// string ivw_lib_path = "/home/vic/awake/libs/x64/libmsc.so";
+			// paramJson["ivw"]["msc_lib_path"] = ivw_lib_path;
+			// // MSPLogout();
+		// }
 		//end
-
 		Json::FastWriter writer;
 		string paramStr = writer.write(paramJson);
 		agent = IAIUIAgent::createAgent(paramStr.c_str(), &listener);
@@ -320,22 +315,25 @@ string get_time(){
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
 	string time_= Int_to_String(1900 + ltm->tm_year) +
-				  "_" + Int_to_String(1 + ltm->tm_mon) + 
-				  "_" + Int_to_String(ltm->tm_mday) + 
-				  "_" + Int_to_String(ltm->tm_hour) + 
-				  "_" + Int_to_String(ltm->tm_min) + 
+				  "_" + Int_to_String(1 + ltm->tm_mon) +
+				  "_" + Int_to_String(ltm->tm_mday) +
+				  "_" + Int_to_String(ltm->tm_hour) +
+				  "_" + Int_to_String(ltm->tm_min) +
 				  "_" + Int_to_String(ltm->tm_sec);
 	return time_;
 }
 
-void get_user_log(string file_name,string user , string data){
+void get_user_log(string file_name, string user, string data){
 	ofstream outfile;
 	outfile.open(file_name.c_str(), ios::out|ios::app);
 	string log_time = get_time();
-	outfile << log_time << "_" << user << "_" << data << endl;
+	outfile << log_time << "_" << line << "_" << user << "_" << data << endl;
 	outfile.close();
 }
 
+void debug_log(string file_name, string func, int line, string msg){
+	cout << file_name << "_" << func << "_" << line << "_" << msg << endl;
+}
 
 //接收用户输入命令，调用不同的测试接口
 void AIUITester::readCmd(){
@@ -343,26 +341,27 @@ void AIUITester::readCmd(){
 	char sec[10] = "拉";
 	int count = 0;
 	int count_null = 0;
-	
-    cout<<"teddy"<<endl;
+
 	while (true){
 		createAgent();
-    	wakeup();
+		wakeup();
 		char* newline = (char*)calloc(1000, sizeof(char));
 		string result = "";
-		cout << "while loop count: " << count << endl;
+		debug_log(__FILE__, __FUNCTION__, __LINE__, "while loop count: " + Int_to_String(count));
+		// cout << "while loop count: " << count << endl;
 		writeText(first);
 		while(state != 1){
-			usleep(500);
+			usleep(500000);
 		}
 		if(count == 0){
-			printf("Entry = %s\n", first);
+			debug_log(__FILE__, __FUNCTION__, __LINE__, "Entry: 阿英");
 			tts_function("你好! 我是阿英, 垃圾分类的问题可以问我");
-			get_user_log(log_file_name,"system","你好! 我是阿英, 垃圾分类的问题可以问我");
+			// get_user_log(log_file_name,"system","你好! 我是阿英, 垃圾分类的问题可以问我");
 			destory();
 		}else if(count > 0){
 			FILE *fd;
-			printf("Start Listening...\n");
+			debug_log(__FILE__, __FUNCTION__, __LINE__, "Start Listening...");
+			// printf("Start Listening...\n");
 			system("play -q ding.wav");
 			fd = popen("./iat_online_record_sample", "r");
 			while((fgets(newline, 256, fd)) != NULL) {
@@ -371,23 +370,27 @@ void AIUITester::readCmd(){
 			if(strstr(newline, "结束") != NULL){
 				break;
 			}else if ((newline != NULL) && (newline[0] == '\0')){
-				printf("count null = %d\n", count_null);
+				debug_log(__FILE__, __FUNCTION__, __LINE__, "count null: " + Int_to_String(count_null));
+				// printf("count null = %d\n", count_null);
 				if(count_null >= 2){
-					printf("没有听到我会的, 我先干别的去了, 需要再叫我阿英\n");
+					debug_log(__FILE__, __FUNCTION__, __LINE__, "没有听到我会的, 我先干别的去了, 需要再叫我阿英");
+					// printf("没有听到我会的, 我先干别的去了, 需要再叫我阿英\n");
 					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");
-					get_user_log(log_file_name,"system","没有听到我会的, 我先干别的去了, 需要再叫我阿英");
+					// get_user_log(log_file_name,"system","没有听到我会的, 我先干别的去了, 需要再叫我阿英");
 					break;
 				}else{
 					state = 0;
-					printf("No Speak input!\n");
+					debug_log(__FILE__, __FUNCTION__, __LINE__, "No Speak input!");
+					// printf("No Speak input!\n");
 					writeText(sec);
 				}
 				count_null++;
 			}else{
 				state = 0;
 				count_null = 0;
-				printf("Speak = %s\n", newline);
-				get_user_log(log_file_name,"user",newline);
+				debug_log(__FILE__, __FUNCTION__, __LINE__, "Speak:" + newline);
+				// printf("Speak = %s\n", newline);
+				// get_user_log(log_file_name,"user",newline);
 				writeText(result);
 			}
 			pclose(fd);
@@ -395,7 +398,7 @@ void AIUITester::readCmd(){
 			printf("Error!\n");
 		}
 		while(state != 1){
-			usleep(50000);
+			usleep(500000);
 		}
 		count++;
 		state = 0;
