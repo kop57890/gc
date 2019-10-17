@@ -162,6 +162,15 @@ void run_ivw(const char *grammar_list,  const char* session_begin_params)
 
 	snprintf(sse_hints, sizeof(sse_hints), "success");
 
+	sleep_ms(200);
+
+	if(!is_record_stopped(recorder)){
+		stop_record(recorder);
+	}		
+	close_recorder(recorder);
+	destroy_recorder(recorder);
+	printf("destroy_recorder !!\n");
+
 exit:
 	if (NULL != session_id)
 	{

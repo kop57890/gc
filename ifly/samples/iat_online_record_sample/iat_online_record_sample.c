@@ -107,6 +107,11 @@ int main(int argc, char* argv[]){
 		exit(0); // login fail, exit the program
 	}
 	demo_mic(session_begin_params);
-	printf("%s\n", get_result);
+	if(get_result) {
+		printf("%s\n", get_result);
+	}
+	else {
+		printf("no_iat\n");
+	}
 	return 0;
 }
