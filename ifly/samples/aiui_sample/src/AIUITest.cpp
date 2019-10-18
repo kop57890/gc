@@ -188,10 +188,10 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 						if(parse_result != "init"){
 							if(parse_result.find("已确认") > 8 && parse_result.find("已确认") < 20){ // work around
 								parse_result = "请问这是什么材料构成的";
-							}							
+							}
+							debug_log(__FILE__, __FUNCTION__, __LINE__, parse_result);
 							tts_function(parse_result.c_str());
 						}
-						debug_log(__FILE__, __FUNCTION__, __LINE__, parse_result);
 						state = 1;
 					}
 				} else {
@@ -346,34 +346,35 @@ void AIUITester::readCmd(){
 		wakeup();
 		char* newline = (char*)calloc(1000, sizeof(char));
 		string result = "";
-		debug_log(__FILE__, __FUNCTION__, __LINE__, "while loop count: " + Int_to_String(count));		
+		debug_log(__FILE__, __FUNCTION__, __LINE__, "while loop count: " + Int_to_String(count));
 		writeText(first);
 		while(state != 1){
 			usleep(500000);
 		}
 		if(count == 0){
 			debug_log(__FILE__, __FUNCTION__, __LINE__, "Entry: 阿英");
-			tts_function("你好! 我是阿英, 垃圾分类的问题可以问我");			
+			tts_function("你好! 我是阿英, 垃圾分类的问题可以问我");
 			destory();
 		}else if(count > 0){
 			FILE *fd;
-			debug_log(__FILE__, __FUNCTION__, __LINE__, "Start Listening...");			
+			debug_log(__FILE__, __FUNCTION__, __LINE__, "Start Listening...");
 			system("play -q ding.wav");
 			fd = popen("./iat_online_record_sample", "r");
 			while((fgets(newline, 256, fd)) != NULL) {
 				result = newline;
 			}
 			if(strstr(newline, "结束") != NULL){
+				debug_log(__FILE__, __FUNCTION__, __LINE__, "结束 -> go back to awaken status");
 				break;
 			}else if (strstr(newline, "no_iat") != NULL){
-				debug_log(__FILE__, __FUNCTION__, __LINE__, "count null: " + Int_to_String(count_null));				
+				debug_log(__FILE__, __FUNCTION__, __LINE__, "count null: " + Int_to_String(count_null));
 				if(count_null >= 2){
-					debug_log(__FILE__, __FUNCTION__, __LINE__, "没有听到我会的, 我先干别的去了, 需要再叫我阿英");					
-					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");					
+					debug_log(__FILE__, __FUNCTION__, __LINE__, "没有听到我会的, 我先干别的去了, 需要再叫我阿英");
+					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");
 					break;
 				}else{
 					state = 0;
-					debug_log(__FILE__, __FUNCTION__, __LINE__, "No Speak input!");					
+					debug_log(__FILE__, __FUNCTION__, __LINE__, "No Speak input -> 请问这是什么材料构成的");
 					writeText(sec);
 				}
 				count_null++;
