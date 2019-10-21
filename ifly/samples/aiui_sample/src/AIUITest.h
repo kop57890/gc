@@ -34,7 +34,7 @@ using namespace std;
 string Int_to_String(int );
 string get_time();
 void get_user_log(string ,string  , string );
-void debug_log(string, string, int, string);
+void debug_log(string, int, string);
 //写测试音频线程
 class WriteAudioThread
 {
