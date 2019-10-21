@@ -340,7 +340,8 @@ void AIUITester::readCmd(){
 	char sec[10] = "拉";
 	int count = 0;
 	int count_null = 0;
-	int loop_count = 0;
+	// int loop_count = 0;
+
 	while (true){
 		createAgent();
 		wakeup();
@@ -350,12 +351,12 @@ void AIUITester::readCmd(){
 		writeText(first);
 		while(state != 1){
 			usleep(500000);
-			loop_count++;
-			if(loop_count > 4){
-				loop_count = 0;
-				debug_log(__FUNCTION__, __LINE__, "Requests are out of range");
-				break;
-			}
+			// loop_count++;
+			// if(loop_count > 4){
+			// 	loop_count = 0;
+			// 	debug_log(__FUNCTION__, __LINE__, "Requests are out of range");
+			// 	break;
+			// }
 		}
 		if(count == 0){
 			debug_log(__FUNCTION__, __LINE__, "Entry: 阿英");
@@ -397,12 +398,12 @@ void AIUITester::readCmd(){
 		}
 		while(state != 1){
 			usleep(500000);
-			loop_count++;
-			if(loop_count > 4){
-				loop_count = 0;
-				debug_log(__FUNCTION__, __LINE__, "Requests are out of range");
-				break;
-			}
+			// loop_count++;
+			// if(loop_count > 4){
+			// 	loop_count = 0;
+			// 	debug_log(__FUNCTION__, __LINE__, "Requests are out of range");
+			// 	break;
+			// }
 		}
 		count++;
 		state = 0;
