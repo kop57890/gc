@@ -17,7 +17,6 @@
 #define IAT_NUM 512
 
 using namespace VA;
-string log_file_name="log_file/"+get_time()+".txt";
 typedef struct _wave_pcm_hdr{
 
 	char            riff[4];                // = "RIFF"
@@ -242,30 +241,6 @@ void AIUITester::createAgent(){
 	Json::Reader reader;
 	if(reader.parse(fileParam, paramJson, false)){
 		paramJson["login"] = appidJson;
-		//for ivw support
-		// string wakeup_mode = paramJson["speech"]["wakeup_mode"].asString();
-		//如果在aiui.cfg中设置了唤醒模式为ivw唤醒，那么需要对设置的唤醒资源路径作处理，并且设置唤醒的libmsc.so的路径为当前路径
-		// if(wakeup_mode == "ivw"){
-			// //readme中有说明，使用libmsc.so唤醒库，需要调用MSPLogin()先登录
-			// string lgiparams = "appid=5d836e29, engine_start=ivw";
-			// printf("sssssssssss\n");
-			// int ret = MSP_SUCCESS;
-			// ret = MSPLogin(NULL, NULL, lgiparams.c_str());
-			// printf("xxxxxxxxx %d\n", ret);
-			// if (MSP_SUCCESS != ret){
-				// printf("MSPLogin failed, error code: %d.\n", ret);
-				// exit(0);
-			// }
-			// string ivw_res_path = paramJson["ivw"]["res_path"].asString();
-			// if(!ivw_res_path.empty()){
-				// ivw_res_path = "fo|" + ivw_res_path;
-				// paramJson["ivw"]["res_path"] = ivw_res_path;
-			// }
-			// string ivw_lib_path = "/home/vic/awake/libs/x64/libmsc.so";
-			// paramJson["ivw"]["msc_lib_path"] = ivw_lib_path;
-			// // MSPLogout();
-		// }
-		//end
 		Json::FastWriter writer;
 		string paramStr = writer.write(paramJson);
 		agent = IAIUIAgent::createAgent(paramStr.c_str(), &listener);
@@ -322,14 +297,6 @@ string get_time(){
 	return time_;
 }
 
-void get_user_log(string file_name, string user, string data){
-	ofstream outfile;
-	outfile.open(file_name.c_str(), ios::out|ios::app);
-	string log_time = get_time();
-	outfile << log_time << "_" << user << "_" << data << endl;
-	outfile.close();
-}
-
 void debug_log(string func, int line, string msg){
 	cout << " || " << func << " || " << line << " || " << msg << endl;
 }
@@ -340,7 +307,6 @@ void AIUITester::readCmd(){
 	char sec[10] = "拉";
 	int count = 0;
 	int count_null = 0;
-	// int loop_count = 0;
 
 	while (true){
 		createAgent();
@@ -351,21 +317,14 @@ void AIUITester::readCmd(){
 		writeText(first);
 		while(state != 1){
 			usleep(500000);
-			// loop_count++;
-			// if(loop_count > 4){
-			// 	loop_count = 0;
-			// 	debug_log(__FUNCTION__, __LINE__, "Requests are out of range");
-			// 	break;
-			// }
 		}
 		if(count == 0){
 			debug_log(__FUNCTION__, __LINE__, "Entry: 阿英");
-			tts_function("你好! 我是阿英, 垃圾分类的问题可以问我");
+			system("play -q hello.pcm");
 			destory();
 		}else if(count > 0){
 			FILE *fd;
 			debug_log(__FUNCTION__, __LINE__, "Start Listening...");
-			// usleep(500000);
 			system("play -q ding.wav");
 			fd = popen("./iat_online_record_sample", "r");
 			while((fgets(newline, 256, fd)) != NULL) {
@@ -378,7 +337,7 @@ void AIUITester::readCmd(){
 				debug_log(__FUNCTION__, __LINE__, "count null: " + Int_to_String(count_null));
 				if(count_null >= 2){
 					debug_log(__FUNCTION__, __LINE__, "没有听到我会的, 我先干别的去了, 需要再叫我阿英");
-					tts_function("没有听到我会的, 我先干别的去了, 需要再叫我阿英");
+					system("play -q quit_qa.pcm");
 					break;
 				}else{
 					state = 0;
@@ -398,12 +357,6 @@ void AIUITester::readCmd(){
 		}
 		while(state != 1){
 			usleep(500000);
-			// loop_count++;
-			// if(loop_count > 4){
-			// 	loop_count = 0;
-			// 	debug_log(__FUNCTION__, __LINE__, "Requests are out of range");
-			// 	break;
-			// }
 		}
 		count++;
 		state = 0;
