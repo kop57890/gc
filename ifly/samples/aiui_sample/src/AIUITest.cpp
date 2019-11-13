@@ -186,10 +186,12 @@ void TestListener::onEvent(const IAIUIEvent& event) const{
 						parse_result = result_Param["intent"]["answer"]["text"].asString(); // 拿來當判斷的string todo
 						if(parse_result != "init"){
 							if(parse_result.find("已确认") > 8 && parse_result.find("已确认") < 20){ // work around
-								parse_result = "请问这是什么材料构成的";
+								debug_log(__FUNCTION__, __LINE__, "请问这是什么材料构成的");
+								system("play -q unknown.pcm");
+							}else{
+								debug_log(__FUNCTION__, __LINE__, parse_result);
+								tts_function(parse_result.c_str());
 							}
-							debug_log(__FUNCTION__, __LINE__, parse_result);
-							tts_function(parse_result.c_str());
 						}
 						state = 1;
 					}

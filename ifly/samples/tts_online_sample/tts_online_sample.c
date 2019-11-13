@@ -21,7 +21,7 @@ typedef struct _wave_pcm_hdr{
 	short int block_align;            // = 每采样点字节数 : wBitsPerSample / 8
 	short int bits_per_sample;        // = 量化比特数: 8 | 16
 	char data[4];                // = "data";
-	int	data_size;              // = 纯数据长度 : FileSize - 44 
+	int	data_size;              // = 纯数据长度 : FileSize - 44
 } wave_pcm_hdr;
 
 /* 默认wav音频头部数据 */
@@ -38,7 +38,7 @@ wave_pcm_hdr default_wav_hdr = {
 	2,
 	16,
 	{'d', 'a', 't', 'a'},
-	0  
+	0
 };
 /* 文本合成 */
 int text_to_speech(const char* src_text, const char* des_path, const char* params){
@@ -97,7 +97,7 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 	}
 	/* 修正wav文件头数据的大小 */
 	wav_hdr.size_8 += wav_hdr.data_size + (sizeof(wav_hdr) - 8);
-	
+
 	/* 将修正过的数据写回文件头部,音频文件为wav格式 */
 	fseek(fp, 4, 0);
 	fwrite(&wav_hdr.size_8,sizeof(wav_hdr.size_8), 1, fp); //写入size_8的值
@@ -115,10 +115,10 @@ int text_to_speech(const char* src_text, const char* des_path, const char* param
 
 int main(int argc, char* argv[]){
 	int ret = MSP_SUCCESS;
-	const char* login_params = "appid = 5d3fde6d, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动
+	const char* login_params = "appid = 5d836e29, work_dir = .";//登录参数,appid与msc库绑定,请勿随意改动
 	const char* session_begin_params = "voice_name = xiaoyan, text_encoding = utf8, sample_rate = 16000, speed = 50, volume = 50, pitch = 50, rdn = 2";
 	const char* filename = "tts_sample.pcm"; //合成的语音文件名称
-	const char* text = "垃圾分類"; //合成文本
+	const char* text = "请问这是什么材料构成的"; //合成文本
 
 	/* 用户登录 */
 	ret = MSPLogin(NULL, NULL, login_params);//第一个参数是用户名，第二个参数是密码，第三个参数是登录参数，用户名和密码可在http://www.xfyun.cn注册获取
